@@ -4,8 +4,8 @@ using UnityEngine;
 
 public struct GridPosition {
 
-    private int x;
-    private int z;
+    public int x;
+    public int z;
 
     public GridPosition(int x, int z) {
         this.x = x; 
