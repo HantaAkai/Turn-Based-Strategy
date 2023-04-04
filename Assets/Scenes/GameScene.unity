@@ -534,6 +534,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b73e565ad468d41b78dad854dab176, type: 3}
+--- !u!1 &783285863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 783285865}
+  - component: {fileID: 783285864}
+  m_Layer: 0
+  m_Name: LevelGrid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &783285864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783285863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633e896d00a9c24479bd93a890f5648c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridDebugObjectPrefab: {fileID: 4979832764084515401, guid: 65c9214f987bbb744b12decd6c932877,
+    type: 3}
+--- !u!4 &783285865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783285863}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.85058916, y: -4.4332833, z: 10.732246}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,8 +826,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccef94fd0bf854840b9b880c7f702aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridDebugObjectPrefab: {fileID: 4979832764084515401, guid: 65c9214f987bbb744b12decd6c932877,
-    type: 3}
 --- !u!4 &2008062372
 Transform:
   m_ObjectHideFlags: 0
@@ -924,7 +968,7 @@ PrefabInstance:
     - target: {fileID: 6785842476085885061, guid: c104064d87531624ca24a261e6a9c6b0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 6.09
       objectReference: {fileID: 0}
     - target: {fileID: 6785842476085885061, guid: c104064d87531624ca24a261e6a9c6b0,
         type: 3}
@@ -934,7 +978,7 @@ PrefabInstance:
     - target: {fileID: 6785842476085885061, guid: c104064d87531624ca24a261e6a9c6b0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3.84
       objectReference: {fileID: 0}
     - target: {fileID: 6785842476085885061, guid: c104064d87531624ca24a261e6a9c6b0,
         type: 3}
