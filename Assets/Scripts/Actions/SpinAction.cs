@@ -1,13 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpinAction : BaseAction {
 
-    public delegate void SpinCompleteDelegate();
-
     private float spinProgress;
-    private SpinCompleteDelegate onSpinComplete;
 
     private void Update() {
         if (!isActive) {
@@ -21,13 +19,13 @@ public class SpinAction : BaseAction {
 
         if (spinProgress >= 360) {
             isActive = false;
-            onSpinComplete();
+            onActionComplete();
         }
     }
 
 
-    public void Spin(SpinCompleteDelegate onSpinComplete) {
-        this.onSpinComplete = onSpinComplete;
+    public void Spin(Action onActionComplete) {
+        this.onActionComplete = onActionComplete;
         isActive = true;
         spinProgress = 0;
     }
