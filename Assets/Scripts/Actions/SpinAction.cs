@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class SpinAction : BaseAction {
 
+    public delegate void SpinCompleteDelegate();
+
     private float spinProgress;
+    private SpinCompleteDelegate onSpinComplete;
 
     private void Update() {
         if (!isActive) {
@@ -18,11 +21,13 @@ public class SpinAction : BaseAction {
 
         if (spinProgress >= 360) {
             isActive = false;
+            onSpinComplete();
         }
     }
 
 
-    public void Spin() {
+    public void Spin(SpinCompleteDelegate onSpinComplete) {
+        this.onSpinComplete = onSpinComplete;
         isActive = true;
         spinProgress = 0;
     }
