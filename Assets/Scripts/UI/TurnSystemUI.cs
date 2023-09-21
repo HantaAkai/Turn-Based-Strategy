@@ -12,14 +12,18 @@ public class TurnSystemUI : MonoBehaviour {
     private void Start() {
         endTurnButton.onClick.AddListener(() => { 
             TurnSystem.Instance.NextTurn();
-
-            UpdateTurnNumberText();
         });
 
-        UpdateTurnNumberText();
+        TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+
+        UpdateTurnText();
     }
 
-    private void UpdateTurnNumberText() {
+    private void TurnSystem_OnTurnChanged(object sender, System.EventArgs e) {
+        UpdateTurnText();
+    }
+
+    private void UpdateTurnText() {
         int turnNumber = TurnSystem.Instance.TurnNumber;
         turnNumberText.text = $"TURN {turnNumber}";
     }

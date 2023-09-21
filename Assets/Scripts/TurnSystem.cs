@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class TurnSystem : MonoBehaviour {
 
     public static TurnSystem Instance;
+
+    public event EventHandler OnTurnChanged;
 
     private int turnNumber = 1;
     public int TurnNumber { get { return turnNumber; } }
@@ -22,6 +25,8 @@ public class TurnSystem : MonoBehaviour {
 
     public void NextTurn() {
         turnNumber++;
+
+        OnTurnChanged?.Invoke(this, EventArgs.Empty);
     }
 
 }
