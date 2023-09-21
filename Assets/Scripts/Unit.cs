@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour {
     private SpinAction spinAction;
     private BaseAction[] baseActionArary;
     private int actionPoints = 2;
+    public int ActionPoints { get { return actionPoints; } }
 
     private void Awake() {
         moveAction = GetComponent<MoveAction>();
