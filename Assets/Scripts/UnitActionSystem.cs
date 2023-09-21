@@ -68,6 +68,11 @@ public class UnitActionSystem : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, unitLayerMask)) {
                 if (raycastHit.transform.TryGetComponent<Unit>(out Unit unit)) {
+                    if (unit == selectedUnit) {
+                        //unit is already selected
+                        return false;
+                    }
+
                     SetSelectedUnit(unit);
                     return true;
                 }
