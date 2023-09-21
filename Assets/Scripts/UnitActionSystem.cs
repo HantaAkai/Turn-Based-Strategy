@@ -96,4 +96,8 @@ public class UnitActionSystem : MonoBehaviour {
         isBusy = false;
     }
 
+    public BaseAction GetSelectedAction() {
+        return selectedAction;
+    }
+
 }
