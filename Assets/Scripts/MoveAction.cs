@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class MoveAction : MonoBehaviour {
     [SerializeField] private Animator unitAnimator;
+    [SerializeField] private int maxMoveDistance = 4;
 
     private Vector3 targetPosition;
+    private Unit unit;
 
     private void Awake() {
+        unit = GetComponent<Unit>();
         targetPosition = transform.position;
     }
 
@@ -30,6 +33,22 @@ public class MoveAction : MonoBehaviour {
 
     public void Move(Vector3 targetPosition) {
         this.targetPosition = targetPosition;
+    }
+
+    public List<GridPosition> GetValidActionGridPositionList() {
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
+
+        GridPosition unitGridPosition = unit.GetGridPosition();
+
+        for (int x = -maxMoveDistance; x <= maxMoveDistance; x++) {
+            for (int z = -maxMoveDistance; z <= maxMoveDistance; z++) {
+                GridPosition offsetGridPosition = new GridPosition(x,z);
+                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
+                Debug.Log(testGridPosition);
+            }
+        }
+
+        return validGridPositionList;
     }
 
 }
