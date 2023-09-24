@@ -41,6 +41,10 @@ public class UnitActionSystem : MonoBehaviour {
             return;
         }
 
+        if (!TurnSystem.Instance.IsPlayerTurn) {
+            return;
+        }
+
         if (EventSystem.current.IsPointerOverGameObject()) {
             return;
         }
@@ -79,6 +83,7 @@ public class UnitActionSystem : MonoBehaviour {
     private void ClearBusy() {
         isBusy = false;
         OnBusyChanged?.Invoke(this, isBusy);
+
     }
 
     private bool TryHandleUnitSelection() {
@@ -89,6 +94,11 @@ public class UnitActionSystem : MonoBehaviour {
                 if (raycastHit.transform.TryGetComponent<Unit>(out Unit unit)) {
                     if (unit == selectedUnit) {
                         //unit is already selected
+                        return false;
+                    }
+
+                    if (unit.IsEnemy) {
+                        //Clicked an Enemy
                         return false;
                     }
 
