@@ -5,7 +5,36 @@ using UnityEngine;
 
 public class ShootAction : BaseAction {
 
+    private enum State {
+        Aiming,
+        Shooting,
+        Cooloff
+    }
+
+    private State state;
+    private float stateTimer;
     private int maxShootDistance = 7;
+
+    private void Update() {
+        if (!isActive) {
+            return;
+        }
+
+        stateTimer -= Time.deltaTime;
+
+        switch (state) {
+            case State.Aiming:
+                break; 
+            case State.Shooting:
+                break;
+                case State.Cooloff:
+                break;
+        }
+
+        if (stateTimer <= 0f) {
+            NextState();
+        }
+    }
 
 
     public override string GetActionName() {
@@ -52,6 +81,34 @@ public class ShootAction : BaseAction {
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) {
-        throw new NotImplementedException();
+        this.onActionComplete = onActionComplete;
+        isActive = true;
+
+        Debug.Log("Aiming");
+        state = State.Aiming;
+        float aimingStateTime = 1f;
+        stateTimer = aimingStateTime;
+    }
+
+    private void NextState() {
+        switch (state) {
+            case State.Aiming:
+                state = State.Shooting;
+                float shootingStateTime = .1f;
+                stateTimer = shootingStateTime;
+                break;
+            case State.Shooting:
+                state = State.Cooloff;
+                float cooloffStateTime = .5f;
+                stateTimer = cooloffStateTime;
+                break;
+            case State.Cooloff:
+                isActive = false;
+                onActionComplete();
+                break;
+        }
+
+        Debug.Log(state);
+
     }
 }
