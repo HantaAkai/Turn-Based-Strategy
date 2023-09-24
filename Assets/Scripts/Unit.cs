@@ -92,6 +92,14 @@ public class Unit : MonoBehaviour {
 
         OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
     }
+
+    public void Damage() {
+        Debug.Log($"{transform} damaged!");
+    }
+
+    public Vector3 GetWorldPosition() {
+        return transform.position;
+    }
 }
 
 

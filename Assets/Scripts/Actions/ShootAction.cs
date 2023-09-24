@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements.Experimental;
 
 public class ShootAction : BaseAction {
 
@@ -14,6 +17,8 @@ public class ShootAction : BaseAction {
     private State state;
     private float stateTimer;
     private int maxShootDistance = 7;
+    private Unit targetUnit;
+    private bool canShootBullet;
 
     private void Update() {
         if (!isActive) {
@@ -24,18 +29,26 @@ public class ShootAction : BaseAction {
 
         switch (state) {
             case State.Aiming:
-                break; 
-            case State.Shooting:
+                Vector3 aimDirection = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
+
+                float rotateSpeed = 10f;
+                transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * rotateSpeed);
                 break;
-                case State.Cooloff:
+            case State.Shooting:
+                if (canShootBullet) {
+                    Shoot();
+                    canShootBullet = false;
+                }
+                break;
+            case State.Cooloff:
                 break;
         }
 
         if (stateTimer <= 0f) {
             NextState();
         }
-    }
 
+    }
 
     public override string GetActionName() {
         return "Shoot";
@@ -81,13 +94,15 @@ public class ShootAction : BaseAction {
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) {
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
 
-        Debug.Log("Aiming");
+        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
+
         state = State.Aiming;
         float aimingStateTime = 1f;
         stateTimer = aimingStateTime;
+
+        canShootBullet = true;
     }
 
     private void NextState() {
@@ -103,12 +118,12 @@ public class ShootAction : BaseAction {
                 stateTimer = cooloffStateTime;
                 break;
             case State.Cooloff:
-                isActive = false;
-                onActionComplete();
+                ActionComplete();
                 break;
         }
+    }
 
-        Debug.Log(state);
-
+    private void Shoot() {
+        targetUnit.Damage();
     }
 }

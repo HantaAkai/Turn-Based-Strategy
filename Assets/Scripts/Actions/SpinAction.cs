@@ -18,15 +18,14 @@ public class SpinAction : BaseAction {
         spinProgress += spinAddAmount;
 
         if (spinProgress >= 360) {
-            isActive = false;
-            onActionComplete();
+            ActionComplete();
         }
     }
 
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) {
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
+
         spinProgress = 0;
     }
 
