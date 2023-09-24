@@ -8,6 +8,8 @@ using UnityEngine.UIElements.Experimental;
 
 public class ShootAction : BaseAction {
 
+    public event EventHandler OnShoot;
+
     private enum State {
         Aiming,
         Shooting,
@@ -124,6 +126,9 @@ public class ShootAction : BaseAction {
     }
 
     private void Shoot() {
+
+        OnShoot?.Invoke(this, EventArgs.Empty);
+
         targetUnit.Damage();
     }
 }

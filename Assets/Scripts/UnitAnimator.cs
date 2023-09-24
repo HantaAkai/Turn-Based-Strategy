@@ -11,6 +11,14 @@ public class UnitAnimator : MonoBehaviour {
             moveAction.OnStartMoving += MoveAction_OnStartMoving;
             moveAction.OnStopMoving += MoveAction_OnStopMoving;
         }
+
+        if (TryGetComponent<ShootAction>(out ShootAction shootAction)) {
+            shootAction.OnShoot += ShootAction_OnShoot;
+        }
+    }
+
+    private void ShootAction_OnShoot(object sender, System.EventArgs e) {
+        animator.SetTrigger("Shoot");
     }
 
     private void MoveAction_OnStopMoving(object sender, System.EventArgs e) {
