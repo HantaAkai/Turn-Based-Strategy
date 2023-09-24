@@ -26,6 +26,12 @@ public class ShootAction : BaseAction {
                     continue;
                 }
 
+                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (testDistance > maxShootDistance) {
+                    continue;
+                }
+
+
                 if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
                     //GridPosition is empty, no unit there
                     continue;
