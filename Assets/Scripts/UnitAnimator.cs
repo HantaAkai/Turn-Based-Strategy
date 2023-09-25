@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UnitAnimator : MonoBehaviour {
@@ -25,8 +26,9 @@ public class UnitAnimator : MonoBehaviour {
         Transform bulletProjectileTransform = Instantiate(bulletProjectilePrefab, shootPointTransform.position, Quaternion.identity);
         BulletProjectile bulletProjectile = bulletProjectileTransform.GetComponent<BulletProjectile>();
 
-
-        bulletProjectile.SetUp(e.targetUnit.GetWorldPosition());
+        Vector3 targetUnitShootAtPosition = e.targetUnit.GetWorldPosition();
+        targetUnitShootAtPosition.y = shootPointTransform.position.y;
+        bulletProjectile.SetUp(targetUnitShootAtPosition);
     }
 
     private void MoveAction_OnStopMoving(object sender, System.EventArgs e) {
