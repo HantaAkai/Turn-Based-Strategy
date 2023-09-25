@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour {
 
+    [SerializeField] private TrailRenderer trailRenderer;
+
     private Vector3 targetPosition;
 
     private void Update() {
@@ -17,6 +19,10 @@ public class BulletProjectile : MonoBehaviour {
         float distanceAfterMoving = Vector3.Distance(transform.position, targetPosition);
 
         if (distanceBeforeMoving < distanceAfterMoving) {
+            transform.position = targetPosition;
+
+            trailRenderer.transform.SetParent(null);
+            
             Destroy(gameObject);
         }
     }
