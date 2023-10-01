@@ -24,9 +24,9 @@ public class SpinAction : BaseAction {
 
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) {
-        ActionStart(onActionComplete);
 
         spinProgress = 0;
+        ActionStart(onActionComplete);
     }
 
     public override string GetActionName() {
