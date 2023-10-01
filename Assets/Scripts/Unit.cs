@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour {
     public bool IsEnemy { get { return isEnemy; } }
     
     private GridPosition gridPosition;
+    private HealthSystem healthSystem;
     private MoveAction moveAction;
     private SpinAction spinAction;
     private BaseAction[] baseActionArary;
@@ -24,6 +25,7 @@ public class Unit : MonoBehaviour {
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
         baseActionArary = GetComponents<BaseAction>();
+        healthSystem = GetComponent<HealthSystem>();
     }
 
 
@@ -93,8 +95,8 @@ public class Unit : MonoBehaviour {
         OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void Damage() {
-        Debug.Log($"{transform} damaged!");
+    public void Damage(int damageAmount) {
+        healthSystem.Damage(damageAmount);
     }
 
     public Vector3 GetWorldPosition() {

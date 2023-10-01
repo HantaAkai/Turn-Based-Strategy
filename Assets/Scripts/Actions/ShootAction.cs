@@ -25,6 +25,7 @@ public class ShootAction : BaseAction {
     private int maxShootDistance = 7;
     private Unit targetUnit;
     private bool canShootBullet;
+    private int damageAmount = 40;
 
     private void Update() {
         if (!isActive) {
@@ -136,6 +137,6 @@ public class ShootAction : BaseAction {
             shootingUnit = unit
         }) ;
 
-        targetUnit.Damage();
+        targetUnit.Damage(damageAmount);
     }
 }
