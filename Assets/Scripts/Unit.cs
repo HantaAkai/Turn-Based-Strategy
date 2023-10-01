@@ -34,6 +34,11 @@ public class Unit : MonoBehaviour {
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
 
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+        healthSystem.OnDead += HealthSystem_OnDead;
+    }
+
+    private void HealthSystem_OnDead(object sender, EventArgs e) {
+        Destroy(gameObject);
     }
 
     private void Update() {
