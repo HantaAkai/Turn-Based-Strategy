@@ -252,6 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitRagdollPrefab: {fileID: 5977599898157701896, guid: 6330721380d36644abc56039f500fc86,
     type: 3}
+  originalRoootBone: {fileID: 6068801592395086958}
 --- !u!1 &4824628147510073148
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,6 +586,12 @@ PrefabInstance:
 --- !u!4 &6064030246026809150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4170833147357194, guid: 2f3e27eecb190e44a9af50723c394274,
+    type: 3}
+  m_PrefabInstance: {fileID: 6064398407467624244}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6068801592395086958 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4966341056781146, guid: 2f3e27eecb190e44a9af50723c394274,
     type: 3}
   m_PrefabInstance: {fileID: 6064398407467624244}
   m_PrefabAsset: {fileID: 0}
