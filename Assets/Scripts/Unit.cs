@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour {
     private const int ACTION_POINTS_MAX = 2;
 
     public static event EventHandler OnAnyActionPointsChanged;
+    public event EventHandler OnActionPointsChanged;
 
     [SerializeField] private bool isEnemy;
     public bool IsEnemy { get { return isEnemy; } }
@@ -56,10 +57,10 @@ public class Unit : MonoBehaviour {
     private void TurnSystem_OnTurnChanged(object sender, System.EventArgs e) {
         if ((IsEnemy && !TurnSystem.Instance.IsPlayerTurn) ||
             (!IsEnemy && TurnSystem.Instance.IsPlayerTurn)) {
-        actionPoints = ACTION_POINTS_MAX;
+            actionPoints = ACTION_POINTS_MAX;
 
-        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
-
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+            OnActionPointsChanged?.Invoke(this, EventArgs.Empty);
         }
 
     }
@@ -100,6 +101,7 @@ public class Unit : MonoBehaviour {
         actionPoints -= amount;
 
         OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        OnActionPointsChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void Damage(int damageAmount) {
