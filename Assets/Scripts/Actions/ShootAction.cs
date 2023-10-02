@@ -140,4 +140,8 @@ public class ShootAction : BaseAction {
 
         targetUnit.Damage(damageAmount);
     }
+
+    public Unit GetTargetUnit() {
+        return targetUnit;
+    }
 }
