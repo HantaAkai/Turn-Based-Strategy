@@ -28,10 +28,29 @@ public class GridSystemVisual : MonoBehaviour {
                 gridSystemVisualSingeArray[x,z] = gridSystemVisualSingleTransform.GetComponent<GridSystemVisualSingle>();
             }
         }
+
+        UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
+        LevelGrid.Instance.OnAnyUnitMovedGridPosition += LevelGrid_OnAnyUnitMovedGridPosition;
+
+        UpdateVisual();
     }
 
-    private void Update() {
+    private void LevelGrid_OnAnyUnitMovedGridPosition(object sender, System.EventArgs e) {
         UpdateVisual();
+    }
+
+    private void UnitActionSystem_OnSelectedActionChanged(object sender, System.EventArgs e) {
+        UpdateVisual();
+    }
+
+    private void OnDestroy() {
+        UnitActionSystem.Instance.OnSelectedActionChanged -= UnitActionSystem_OnSelectedActionChanged;
+        LevelGrid.Instance.OnAnyUnitMovedGridPosition -= LevelGrid_OnAnyUnitMovedGridPosition;
+    }
+
+    private void OnDisable() {
+        UnitActionSystem.Instance.OnSelectedActionChanged -= UnitActionSystem_OnSelectedActionChanged;
+        LevelGrid.Instance.OnAnyUnitMovedGridPosition -= LevelGrid_OnAnyUnitMovedGridPosition;
     }
 
     public void HideAllGridPositions() {
