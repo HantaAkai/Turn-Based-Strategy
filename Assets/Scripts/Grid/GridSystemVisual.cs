@@ -1,12 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 public class GridSystemVisual : MonoBehaviour {
     public static GridSystemVisual Instance { get; private set; }
 
+    [Serializable]
+    public struct GridVisualTypeMaterial {
+        public GridVisualType gridVisualType;
+        public Material material;
+    }
+
+    public enum GridVisualType {
+        White = 0,
+        Blue = 1,
+        Red = 2,
+        Yellow = 3,
+    }
+
     [SerializeField] private Transform gridSystemVisualSinglePrefab;
+    [SerializeField] private List<GridVisualTypeMaterial> gridVisualTypeMaterialList;
+
     private GridSystemVisualSingle[,] gridSystemVisualSingeArray;
 
     private void Awake() {
@@ -61,9 +78,9 @@ public class GridSystemVisual : MonoBehaviour {
         }
     }
 
-    public void ShowGridPositionList(List<GridPosition> gridPositionList) {
+    public void ShowGridPositionList(List<GridPosition> gridPositionList, GridVisualType gridVisualType) {
         foreach (GridPosition gridPosition in gridPositionList) {
-            gridSystemVisualSingeArray[gridPosition.x, gridPosition.z].Show();
+            gridSystemVisualSingeArray[gridPosition.x, gridPosition.z].Show(GetGridVisualTypeMaterial(gridVisualType));
         }
     }
 
@@ -72,6 +89,32 @@ public class GridSystemVisual : MonoBehaviour {
 
         BaseAction selectedAction = UnitActionSystem.Instance.GetSelectedAction();
 
-        ShowGridPositionList(selectedAction.GetValidActionGridPositionList());
+        GridVisualType gridVisualType = GridVisualType.White;
+
+        switch (selectedAction) {
+            default:
+            case MoveAction moveAction:
+                gridVisualType = GridVisualType.White;
+                break;
+            case SpinAction spinAction:
+                gridVisualType = GridVisualType.Blue;
+                break;
+            case ShootAction shootAction:
+                gridVisualType = GridVisualType.Red;
+                break;
+        }
+
+        ShowGridPositionList(selectedAction.GetValidActionGridPositionList(), gridVisualType);
+    }
+
+    private Material GetGridVisualTypeMaterial(GridVisualType gridVisualType) {
+        foreach (GridVisualTypeMaterial gridVisualTypeMaterial in gridVisualTypeMaterialList) {
+            if(gridVisualTypeMaterial.gridVisualType == gridVisualType) {
+                return gridVisualTypeMaterial.material;
+            }
+        }
+
+        Debug.LogError($"Vould not find GridVisualTypeMaterial for GridVisualType (${gridVisualType})!");
+        return null;
     }
 } 
