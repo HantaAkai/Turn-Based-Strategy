@@ -26,7 +26,10 @@ public class TurnSystem : MonoBehaviour {
 
 
     public void NextTurn() {
-        turnNumber++;
+        if (!isPlayerTurn) {
+            turnNumber++;
+        }
+
         isPlayerTurn = !isPlayerTurn;
 
         OnTurnChanged?.Invoke(this, EventArgs.Empty);
