@@ -26,6 +26,8 @@ public class ShootAction : BaseAction {
     private Unit targetUnit;
     private bool canShootBullet;
     private int damageAmount = 40;
+    
+    public int MaxShootDistance {get {return maxShootDistance;}}
 
     private void Update() {
         if (!isActive) {

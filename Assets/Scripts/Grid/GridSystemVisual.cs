@@ -19,6 +19,7 @@ public class GridSystemVisual : MonoBehaviour {
         Blue = 1,
         Red = 2,
         Yellow = 3,
+        RedSoft = 4,
     }
 
     [SerializeField] private Transform gridSystemVisualSinglePrefab;
@@ -78,6 +79,30 @@ public class GridSystemVisual : MonoBehaviour {
         }
     }
 
+    private void ShowGridPositionRange(GridPosition centralGridPosition, int range, GridVisualType gridVisualType) {
+        
+        List<GridPosition> gridPositionList = new List<GridPosition>();
+        
+        for (int x = -range; x <= range; x++) {
+            for (int z = -range; z <= range; z++) {
+                GridPosition testGridPosition = centralGridPosition + new GridPosition(x,z);
+
+                if (!LevelGrid.Instance.IsValisdGridPosition(testGridPosition)) {
+                    continue;
+                }
+
+                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (testDistance > range) {
+                    continue;
+                }
+
+                gridPositionList.Add(testGridPosition);
+            }
+        }
+
+        ShowGridPositionList(gridPositionList, gridVisualType);
+    }
+
     public void ShowGridPositionList(List<GridPosition> gridPositionList, GridVisualType gridVisualType) {
         foreach (GridPosition gridPosition in gridPositionList) {
             gridSystemVisualSingeArray[gridPosition.x, gridPosition.z].Show(GetGridVisualTypeMaterial(gridVisualType));
@@ -87,6 +112,7 @@ public class GridSystemVisual : MonoBehaviour {
     public void UpdateVisual() {
         HideAllGridPositions();
 
+        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         BaseAction selectedAction = UnitActionSystem.Instance.GetSelectedAction();
 
         GridVisualType gridVisualType = GridVisualType.White;
@@ -101,6 +127,8 @@ public class GridSystemVisual : MonoBehaviour {
                 break;
             case ShootAction shootAction:
                 gridVisualType = GridVisualType.Red;
+
+                ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.MaxShootDistance, GridVisualType.RedSoft);
                 break;
         }
 
