@@ -37,8 +37,12 @@ public class EnemyAI : MonoBehaviour {
             case State.TakingTurn:
                 timer -= Time.deltaTime;
                 if (timer < 0f) {
-                    state = State.Busy;
-                    TakeEnemyAIAction(SetStateTakingTurn);
+                    if (TryTakeEnemyAIAction(SetStateTakingTurn)) {
+                        state = State.Busy;
+                    } else {
+                        //No more enemies have actions that they can take, end enemy turn
+                        TurnSystem.Instance.NextTurn();
+                    }
                 }
                 break;
             case State.Busy:
@@ -61,25 +65,31 @@ public class EnemyAI : MonoBehaviour {
         }
     }
 
-    private void TakeEnemyAIAction(Action onEnemyAIActionComplete) {
+    private bool TryTakeEnemyAIAction(Action onEnemyAIActionComplete) {
         Debug.Log("Taking Enemy AI Action");
         foreach (Unit enemyUnit in UnitManager.Instance.GetEnemyUnitList()) {
-            TakeEnemyAIAction(enemyUnit, onEnemyAIActionComplete);
+            if (TryTakeEnemyAIAction(enemyUnit, onEnemyAIActionComplete)) {
+                return true;
+            }
         }
+        return false;
     }
 
-    private void TakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete) {
+    private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete) {
         SpinAction spinAction = enemyUnit.GetSpinAction();
 
         GridPosition actionGridPosition = enemyUnit.GetGridPosition();
 
         if (!spinAction.IsValidActionGridPosition(actionGridPosition)) {
-            return;
+            return false;
         }
 
-        if (enemyUnit.TrySpendActionPointsToTakeAction(spinAction)) {
-            Debug.Log("Doing Spin Action");
-            spinAction.TakeAction(actionGridPosition, onEnemyAIActionComplete);
+        if (!enemyUnit.TrySpendActionPointsToTakeAction(spinAction)) {
+            return false;
         }
+
+        Debug.Log("Doing Spin Action");
+        spinAction.TakeAction(actionGridPosition, onEnemyAIActionComplete);
+        return true;
     }
 }
