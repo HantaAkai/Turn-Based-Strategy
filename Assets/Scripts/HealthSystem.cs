@@ -27,8 +27,6 @@ public class HealthSystem : MonoBehaviour {
         if (health == 0) {
             Die();
         }
-
-        Debug.Log(health);
     }
 
     public void Die() {

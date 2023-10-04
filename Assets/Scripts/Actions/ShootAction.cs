@@ -26,8 +26,8 @@ public class ShootAction : BaseAction {
     private Unit targetUnit;
     private bool canShootBullet;
     private int damageAmount = 40;
-    
-    public int MaxShootDistance {get {return maxShootDistance;}}
+
+    public int MaxShootDistance { get { return maxShootDistance; } }
 
     private void Update() {
         if (!isActive) {
@@ -63,15 +63,29 @@ public class ShootAction : BaseAction {
         return "Shoot";
     }
 
+
+    /// <summary>
+    /// Uses current unit grid position as parameter.
+    /// </summary>
+    /// <returns>Returns vaild gridPositions foir the action.</returns>
     public override List<GridPosition> GetValidActionGridPositionList() {
+        GridPosition unitGridPosition = unit.GetGridPosition();
+        return GetValidActionGridPositionList(unitGridPosition);
+    }
+
+    /// <summary>
+    /// Uses provided grid position as parameter.
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns>Returns vaild gridPositions foir the action.</returns>
+    public List<GridPosition> GetValidActionGridPositionList(GridPosition gridPosition) {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
-        GridPosition unitGridPosition = unit.GetGridPosition();
 
         for (int x = -maxShootDistance; x <= maxShootDistance; x++) {
             for (int z = -maxShootDistance; z <= maxShootDistance; z++) {
                 GridPosition offsetGridPosition = new GridPosition(x, z);
-                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
+                GridPosition testGridPosition = gridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValisdGridPosition(testGridPosition)) {
                     continue;
@@ -138,12 +152,23 @@ public class ShootAction : BaseAction {
         OnShoot?.Invoke(this, new OnShootEventArgs {
             targetUnit = targetUnit,
             shootingUnit = unit
-        }) ;
+        });
 
         targetUnit.Damage(damageAmount);
     }
 
     public Unit GetTargetUnit() {
         return targetUnit;
+    }
+
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
+        return new EnemyAIAction {
+            gridPosition = gridPosition,
+            actionValue = 100,
+        };
+    }
+
+    public int GetTargetCountAtGridPosition(GridPosition gridPosition) {
+        return GetValidActionGridPositionList(gridPosition).Count;
     }
 }
