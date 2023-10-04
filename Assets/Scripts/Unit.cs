@@ -126,6 +126,10 @@ public class Unit : MonoBehaviour {
     public Vector3 GetWorldPosition() {
         return transform.position;
     }
+
+    public float GethealthNormalized() {
+        return healthSystem.GetHealthNormalized();
+    }
 }
 
 

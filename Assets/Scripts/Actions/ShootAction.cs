@@ -162,9 +162,13 @@ public class ShootAction : BaseAction {
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
+
+        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
+        int weakTargetModifier = Mathf.RoundToInt((1 - targetUnit.GethealthNormalized()) * 100f);
+
         return new EnemyAIAction {
             gridPosition = gridPosition,
-            actionValue = 100,
+            actionValue = 100 + weakTargetModifier,
         };
     }
 
