@@ -82,6 +82,10 @@ public class MoveAction : BaseAction {
                     continue;
                 }
 
+                if (!Pathfinding.Instance.IsWalkableGridPosition(testGridPosition)) {
+                    continue;
+                }
+
                 validGridPositionList.Add(testGridPosition);
             }
         }

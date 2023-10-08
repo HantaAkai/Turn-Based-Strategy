@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Toolbars;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pathfinding : MonoBehaviour {
 
@@ -218,5 +219,9 @@ public class Pathfinding : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public bool IsWalkableGridPosition(GridPosition gridPosition) {
+        return gridSystem.GetGridObject(gridPosition).isWalkable;
     }
 }
