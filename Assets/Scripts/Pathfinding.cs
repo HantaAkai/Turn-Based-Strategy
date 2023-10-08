@@ -25,8 +25,7 @@ public class Pathfinding : MonoBehaviour {
         }
         Instance = this;
 
-        gridSystem = new GridSystem<PathNode>(10, 10, 2f, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
-        gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
+        
     }
 
     public List<GridPosition> FindPath(GridPosition startGridPosition, GridPosition endGridPosition) {
@@ -182,5 +181,14 @@ public class Pathfinding : MonoBehaviour {
         }
 
         return gridPositionList;
+    }
+
+    public void Setup(int width, int height, float cellSize) {
+        this.width = width;
+        this.height = height;
+        this.cellSize = cellSize;
+
+        gridSystem = new GridSystem<PathNode>(width, height, cellSize, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
+        gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
     }
 }
