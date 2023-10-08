@@ -805,7 +805,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.4045538, y: 0.00000003147096, z: -0.000000013921811, w: 0.91451424}
+  m_LocalRotation: {x: 0.4045538, y: -0.000000031470965, z: 0.000000013921814, w: 0.91451424}
   m_LocalPosition: {x: 2.16, y: 10.6736355, z: -7.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3835,7 +3835,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390404974}
-  m_LocalRotation: {x: 0.4045538, y: 0.00000003147096, z: -0.000000013921811, w: 0.91451424}
+  m_LocalRotation: {x: 0.4045538, y: -0.000000031470965, z: 0.000000013921814, w: 0.91451424}
   m_LocalPosition: {x: 2.16, y: 10.6736355, z: -7.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4582,6 +4582,7 @@ MonoBehaviour:
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  createDebugObjects: 1
 --- !u!4 &1794363346
 Transform:
   m_ObjectHideFlags: 0
@@ -5115,9 +5116,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridDebugObjectPrefab: {fileID: 5608997060508311042, guid: a8cc02c75f73b9b47a5fe34f3f5e1e90,
     type: 3}
-  width: 10
-  height: 10
+  width: 20
+  height: 30
   cellSize: 2
+  createDebugObjects: 0
 --- !u!4 &2052671355
 Transform:
   m_ObjectHideFlags: 0
