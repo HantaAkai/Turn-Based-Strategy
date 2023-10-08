@@ -44,7 +44,7 @@ public class MoveAction : BaseAction {
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) {
-        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(unit.GetGridPosition(), gridPosition);
+        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(unit.GetGridPosition(), gridPosition, out int pathLength);
 
         currentPositionIndex = 0;
         targetPositionList = new List<Vector3>();
@@ -65,16 +65,16 @@ public class MoveAction : BaseAction {
 
         for (int x = -maxMoveDistance; x <= maxMoveDistance; x++) {
             for (int z = -maxMoveDistance; z <= maxMoveDistance; z++) {
-                GridPosition offsetGridPosition = new GridPosition(x,z);
+                GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                if(!LevelGrid.Instance.IsValisdGridPosition(testGridPosition)) {
-                    continue; 
+                if (!LevelGrid.Instance.IsValisdGridPosition(testGridPosition)) {
+                    continue;
                 }
 
                 if (unitGridPosition == testGridPosition) {
                     //current position in the grid
-                    continue; 
+                    continue;
                 }
 
                 if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
@@ -86,7 +86,13 @@ public class MoveAction : BaseAction {
                     continue;
                 }
 
-                if (!Pathfinding.Instance.HasPath(unitGridPosition, testGridPosition)){
+                if (!Pathfinding.Instance.HasPath(unitGridPosition, testGridPosition)) {
+                    continue;
+                }
+
+                float pathFindingDistanceMultiplier = 10f;
+                if (Pathfinding.Instance.GetPathLength(unitGridPosition, testGridPosition) > maxMoveDistance * pathFindingDistanceMultiplier) {
+                    //Path is too long
                     continue;
                 }
 
