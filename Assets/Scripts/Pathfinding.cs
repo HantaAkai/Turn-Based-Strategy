@@ -11,6 +11,7 @@ public class Pathfinding : MonoBehaviour {
     private const int MOVE_DIAGONAL_COST = 14;
 
     [SerializeField] private Transform gridDebugObjectPrefab;
+    [SerializeField] private LayerMask obstaclesLayerMask;
 
     private int width;
     private int height;
@@ -201,8 +202,16 @@ public class Pathfinding : MonoBehaviour {
         gridSystem = new GridSystem<PathNode>(width, height, cellSize, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
         gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
 
-        //TODO: debugging code
-        GetNode(1, 0).SetIsWalkable(false);
-        GetNode(1, 1).SetIsWalkable(false);
+        for (int x = 0; x < width; x++) {
+            for (int z = 0; z < height; z++) {
+                GridPosition gridPosition = new GridPosition(x, z);
+                Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+
+                float raycastOffsetDistance = 5f;
+                if (Physics.Raycast(worldPosition + Vector3.down * raycastOffsetDistance, Vector3.up, raycastOffsetDistance * 2, obstaclesLayerMask)) {
+                    GetNode(x, z).SetIsWalkable(false);
+                }
+            }
+        }
     }
 }
