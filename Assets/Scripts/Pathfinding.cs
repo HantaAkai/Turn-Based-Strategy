@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Toolbars;
 using UnityEngine;
 
 public class Pathfinding : MonoBehaviour {
@@ -36,6 +37,7 @@ public class Pathfinding : MonoBehaviour {
         PathNode endNode = gridSystem.GetGridObject(endGridPosition);
         openList.Add(startNode);
 
+        //Reset all pathNodes
         for (int x = 0; x < gridSystem.GetWidth(); x++) {
             for (int z = 0; z < gridSystem.GetHeight(); z++) {
                 GridPosition gridPosition = new GridPosition(x, z);
@@ -48,9 +50,11 @@ public class Pathfinding : MonoBehaviour {
             }
         }
 
+        //Set starting node
         startNode.SetGCost(0);
         startNode.SetHCost(CalculateDistance(startGridPosition, endGridPosition));
         startNode.CalculateFCost();
+
 
         while (openList.Count > 0) {
             PathNode currentNode = GetLowestFCostPathNode(openList);
@@ -63,8 +67,14 @@ public class Pathfinding : MonoBehaviour {
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
+            //Cycle through neigbour nodes
             foreach (PathNode neighbourNode in GetNeighbourList(currentNode)) {
                 if (closedList.Contains(neighbourNode)) {
+                    continue;
+                }
+
+                if (!neighbourNode.isWalkable) {
+                    closedList.Add(neighbourNode);
                     continue;
                 }
 
@@ -190,5 +200,9 @@ public class Pathfinding : MonoBehaviour {
 
         gridSystem = new GridSystem<PathNode>(width, height, cellSize, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
         gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
+
+        //TODO: debugging code
+        GetNode(1, 0).SetIsWalkable(false);
+        GetNode(1, 1).SetIsWalkable(false);
     }
 }
