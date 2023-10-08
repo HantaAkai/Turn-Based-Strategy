@@ -44,11 +44,14 @@ public class MoveAction : BaseAction {
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) {
-        currentPositionIndex = 0;
-        targetPositionList = new List<Vector3> {
-            LevelGrid.Instance.GetWorldPosition(gridPosition)
-        };
+        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(unit.GetGridPosition(), gridPosition);
 
+        currentPositionIndex = 0;
+        targetPositionList = new List<Vector3>();
+
+        foreach (GridPosition pathGridPosition in pathGridPositionList) {
+            targetPositionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
+        }
 
         OnStartMoving?.Invoke(this, EventArgs.Empty);
         ActionStart(onActionComplete);
