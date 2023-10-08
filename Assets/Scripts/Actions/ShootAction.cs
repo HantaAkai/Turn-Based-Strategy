@@ -20,6 +20,8 @@ public class ShootAction : BaseAction {
         Cooloff
     }
 
+    [SerializeField] private LayerMask obstaclesLayerMask;
+
     private State state;
     private float stateTimer;
     private int maxShootDistance = 7;
@@ -76,16 +78,16 @@ public class ShootAction : BaseAction {
     /// <summary>
     /// Uses provided grid position as parameter.
     /// </summary>
-    /// <param name="gridPosition"></param>
+    /// <param name="unitGridPosition"></param>
     /// <returns>Returns vaild gridPositions foir the action.</returns>
-    public List<GridPosition> GetValidActionGridPositionList(GridPosition gridPosition) {
+    public List<GridPosition> GetValidActionGridPositionList(GridPosition unitGridPosition) {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
 
         for (int x = -maxShootDistance; x <= maxShootDistance; x++) {
             for (int z = -maxShootDistance; z <= maxShootDistance; z++) {
                 GridPosition offsetGridPosition = new GridPosition(x, z);
-                GridPosition testGridPosition = gridPosition + offsetGridPosition;
+                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValisdGridPosition(testGridPosition)) {
                     continue;
@@ -106,6 +108,18 @@ public class ShootAction : BaseAction {
 
                 if (targetUnit.IsEnemy == unit.IsEnemy) {
                     //both units are on the same side
+                    continue;
+                }
+
+                Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                Vector3 shootDirection = (targetUnit.GetWorldPosition() - unitWorldPosition).normalized;
+
+                float unitShoulderHeight = 1.7f;
+                if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight,
+                                shootDirection,
+                                Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPosition()),
+                                obstaclesLayerMask)) {
+                    //Sight is blocked by an obstacle
                     continue;
                 }
 
