@@ -224,4 +224,8 @@ public class Pathfinding : MonoBehaviour {
     public bool IsWalkableGridPosition(GridPosition gridPosition) {
         return gridSystem.GetGridObject(gridPosition).isWalkable;
     }
+
+    public bool HasPath(GridPosition startGridPosition, GridPosition endGridPosition) {
+        return FindPath(startGridPosition, endGridPosition) != null;
+    }
 }
