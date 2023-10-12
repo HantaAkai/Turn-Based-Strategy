@@ -7,6 +7,8 @@ public class GrenadeProjectile : MonoBehaviour {
 
     public static event EventHandler OnAnyGrenadeExploded;
 
+    [SerializeField] private Transform grenadeExplosionVFXPrefab;
+
     private Vector3 targetPosition;
     private float affectedRadius = 4f;
     private Action onGrenadeBehaviourComplete;
@@ -28,6 +30,9 @@ public class GrenadeProjectile : MonoBehaviour {
             }
 
             OnAnyGrenadeExploded?.Invoke(this, EventArgs.Empty);
+
+            Vector3 grenadeVerticalOffset = Vector3.up * 1f;
+            Instantiate(grenadeExplosionVFXPrefab, targetPosition + grenadeVerticalOffset, Quaternion.identity);
             
             Destroy(gameObject);
 
