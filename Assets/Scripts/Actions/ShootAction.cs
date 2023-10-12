@@ -175,7 +175,7 @@ public class ShootAction : BaseAction {
             shootingUnit = unit
         });
 
-        targetUnit.Damage(damageAmount);
+        targetUnit.TakeDamage(damageAmount);
     }
 
     public Unit GetTargetUnit() {

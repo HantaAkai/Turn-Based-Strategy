@@ -5,7 +5,7 @@ using UnityEngine;
 public class GrenadeProjectile : MonoBehaviour {
 
     private Vector3 targetPosition;
-    private float moveSpeed = 15f;
+    private float affectedRadius = 4f;
 
     private void Update() {
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
@@ -15,6 +15,14 @@ public class GrenadeProjectile : MonoBehaviour {
 
         float reachedTargetDistance = .2f;
         if (Vector3.Distance(transform.position, targetPosition) < reachedTargetDistance) {
+            Collider[] colliderArray = Physics.OverlapSphere(targetPosition, affectedRadius);
+
+            foreach (Collider collider in colliderArray) {
+                if(collider.TryGetComponent<Unit>(out Unit targetUnit)) {
+                    targetUnit.TakeDamage(30);
+                }
+            }
+
             Destroy(gameObject);
         }
     }

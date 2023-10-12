@@ -110,7 +110,7 @@ public class Unit : MonoBehaviour {
         OnActionPointsChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void Damage(int damageAmount) {
+    public void TakeDamage(int damageAmount) {
         healthSystem.Damage(damageAmount);
     }
 
