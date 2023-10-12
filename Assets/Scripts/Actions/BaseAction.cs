@@ -31,6 +31,10 @@ public abstract class BaseAction : MonoBehaviour {
         return 1;
     }
 
+    /// <summary>
+    /// Marks BaseAction as active and sets up onAnyActionComplete callback. Invokes OnAnyaActionStarted event.
+    /// </summary>
+    /// <param name="onActionComplete"></param>
     protected void ActionStart(Action onActionComplete) {
         isActive = true;
         this.onActionComplete = onActionComplete;
@@ -38,6 +42,9 @@ public abstract class BaseAction : MonoBehaviour {
         OnAnyActionStarted?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Marks BaseAction as inactive and calls onAnyActionComplete callback. Invokes OnAnyaActionCompleted event.
+    /// </summary>
     protected void ActionComplete() {
         isActive = false;
         onActionComplete();
