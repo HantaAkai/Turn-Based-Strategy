@@ -13,8 +13,6 @@ public class GrenadeAction : BaseAction {
         if (!isActive) {
             return;
         }
-
-        ActionComplete();
     }
 
     public override string GetActionName() {
@@ -59,9 +57,13 @@ public class GrenadeAction : BaseAction {
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) {
         Transform grenadeProjectileTransform = Instantiate(grenadeProjectilePrefab, unit.GetWorldPosition(),Quaternion.identity);
         GrenadeProjectile grenadeProjectile = grenadeProjectileTransform.GetComponent<GrenadeProjectile>();
-        grenadeProjectile.Setup(gridPosition);
+        grenadeProjectile.Setup(gridPosition, OnGrenadeBehaviourComplete);
 
         Debug.Log("Grenade Action");
         ActionStart(onActionComplete);
+    }
+
+    private void OnGrenadeBehaviourComplete() {
+        ActionComplete();
     }
 }

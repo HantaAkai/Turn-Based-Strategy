@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class GrenadeProjectile : MonoBehaviour {
 
     private Vector3 targetPosition;
     private float affectedRadius = 4f;
+    private Action onGrenadeBehaviourComplete;
 
     private void Update() {
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
@@ -22,12 +24,15 @@ public class GrenadeProjectile : MonoBehaviour {
                     targetUnit.TakeDamage(30);
                 }
             }
-
+            
             Destroy(gameObject);
+
+            onGrenadeBehaviourComplete();
         }
     }
 
-    public void Setup(GridPosition targetGridPosition) {
+    public void Setup(GridPosition targetGridPosition, Action onGrenadeBehaviourComplete) {
+        this.onGrenadeBehaviourComplete = onGrenadeBehaviourComplete;
         targetPosition = LevelGrid.Instance.GetWorldPosition(targetGridPosition);
     }
 }
