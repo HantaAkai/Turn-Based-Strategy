@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GrenadeProjectile : MonoBehaviour {
 
+    public static event EventHandler OnAnyGrenadeExploded;
+
     private Vector3 targetPosition;
     private float affectedRadius = 4f;
     private Action onGrenadeBehaviourComplete;
@@ -24,6 +26,8 @@ public class GrenadeProjectile : MonoBehaviour {
                     targetUnit.TakeDamage(30);
                 }
             }
+
+            OnAnyGrenadeExploded?.Invoke(this, EventArgs.Empty);
             
             Destroy(gameObject);
 
