@@ -49,6 +49,39 @@ MonoBehaviour:
   grenadeExplosionVFXPrefab: {fileID: 8962602432613121816, guid: e7482f74bc27f42489b9f601c037e960,
     type: 3}
   trailRenderer: {fileID: 3992793209767919629}
+  arcYAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5973145
+      inSlope: 1.9743074
+      outSlope: 1.9743074
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.06377551
+    - serializedVersion: 3
+      time: 0.38
+      value: 1.0179074
+      inSlope: 0.17522824
+      outSlope: 0.17522824
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10042967
+      outWeight: 0.12532203
+    - serializedVersion: 3
+      time: 1
+      value: -0.0016479492
+      inSlope: -2.987353
+      outSlope: -2.987353
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.0284006
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3582254528275635939
 GameObject:
   m_ObjectHideFlags: 0

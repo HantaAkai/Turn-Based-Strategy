@@ -9,19 +9,29 @@ public class GrenadeProjectile : MonoBehaviour {
 
     [SerializeField] private Transform grenadeExplosionVFXPrefab;
     [SerializeField] private TrailRenderer trailRenderer;
+    [SerializeField] private AnimationCurve arcYAnimationCurve;
 
     private Vector3 targetPosition;
     private float affectedRadius = 4f;
     private Action onGrenadeBehaviourComplete;
+    private float totalDistanceToTarget;
+    private Vector3 positionXZ;
 
     private void Update() {
-        Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        Vector3 moveDirection = (targetPosition - positionXZ).normalized;
 
         float moveSpeed = 15f;
-        transform.position += moveDirection * Time.deltaTime * moveSpeed;
+        positionXZ += moveDirection * Time.deltaTime * moveSpeed;
+
+        float distance = Vector3.Distance(positionXZ, targetPosition);
+        float distanceNormalized = 1 - distance / totalDistanceToTarget;
+
+        float maxHeight = 3f;
+        float positionY = arcYAnimationCurve.Evaluate(distanceNormalized) * maxHeight;
+        transform.position = new Vector3(positionXZ.x, positionY, positionXZ.z);
 
         float reachedTargetDistance = .2f;
-        if (Vector3.Distance(transform.position, targetPosition) < reachedTargetDistance) {
+        if (distance < reachedTargetDistance) {
             Collider[] colliderArray = Physics.OverlapSphere(targetPosition, affectedRadius);
 
             foreach (Collider collider in colliderArray) {
@@ -46,5 +56,9 @@ public class GrenadeProjectile : MonoBehaviour {
     public void Setup(GridPosition targetGridPosition, Action onGrenadeBehaviourComplete) {
         this.onGrenadeBehaviourComplete = onGrenadeBehaviourComplete;
         targetPosition = LevelGrid.Instance.GetWorldPosition(targetGridPosition);
+
+        positionXZ = transform.position;
+        positionXZ.y = 0;
+        totalDistanceToTarget = Vector3.Distance(positionXZ, targetPosition);
     }
 }
