@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Toolbars;
 using UnityEngine;
 using UnityEngine.UI;
@@ -225,6 +226,10 @@ public class Pathfinding : MonoBehaviour {
 
     public bool IsWalkableGridPosition(GridPosition gridPosition) {
         return gridSystem.GetGridObject(gridPosition).isWalkable;
+    }
+
+    public void SetIsWalkableGridPosition(GridPosition gridPosition, bool isWalkable) {
+        gridSystem.GetGridObject(gridPosition).SetIsWalkable(isWalkable);
     }
 
     public bool HasPath(GridPosition startGridPosition, GridPosition endGridPosition) {

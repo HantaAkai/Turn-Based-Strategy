@@ -1,18 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class DestructibleCrate : MonoBehaviour {
+
+    public static event EventHandler OnAveDestroyed;
+
+    public GridPosition gridPosition { get; private set; }
+
+    private void Start() {
+        gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void TakeDamage() {
+        Destroy(gameObject);
+
+        OnAveDestroyed?.Invoke(this, EventArgs.Empty);
     }
 }
