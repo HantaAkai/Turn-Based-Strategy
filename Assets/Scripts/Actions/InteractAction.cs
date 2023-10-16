@@ -11,8 +11,6 @@ public class InteractAction : BaseAction {
         if (!isActive) {
             return;
         }
-
-        ActionComplete();
     }
 
     public override string GetActionName() {
@@ -57,8 +55,12 @@ public class InteractAction : BaseAction {
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) {
         Door door = LevelGrid.Instance.GetDoorAtGridPosition(gridPosition);
-        door.Interact();
+        door.Interact(OnInteractComplete);
 
         ActionStart(onActionComplete);
+    }
+
+    public void OnInteractComplete() {
+        ActionComplete();
     }
 }
