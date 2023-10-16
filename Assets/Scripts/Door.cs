@@ -4,14 +4,36 @@ using UnityEngine;
 
 public class Door : MonoBehaviour {
 
+    [SerializeField] private bool isOpen;
+
     private GridPosition gridPosition;
 
     private void Start() {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.SetDoorAtGridPosition(gridPosition, this);
+
+        if (isOpen) {
+            OpenDoor();
+        } else {
+            CloseDoor();
+        }
     }
 
     public void Interact() {
-        Debug.Log("Interacticn with Door!");
+        if (isOpen) {
+            CloseDoor();
+        } else {
+            OpenDoor();
+        }
+    }
+
+    private void OpenDoor() {
+        isOpen = true;
+        Pathfinding.Instance.SetIsWalkableGridPosition(gridPosition, isOpen);
+    }
+
+    private void CloseDoor() {
+        isOpen = false;
+        Pathfinding.Instance.SetIsWalkableGridPosition(gridPosition, isOpen);
     }
 }
