@@ -1228,6 +1228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootIntensity: 0.5
   grenadeIntensity: 2
+  swordIntensity: 1.2
 --- !u!4 &381331543
 Transform:
   m_ObjectHideFlags: 0
