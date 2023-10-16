@@ -7,6 +7,11 @@ public class Door : MonoBehaviour {
     [SerializeField] private bool isOpen;
 
     private GridPosition gridPosition;
+    private Animator animator;
+
+    private void Awake() {
+        animator = GetComponent<Animator>(); 
+    }
 
     private void Start() {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
@@ -29,11 +34,13 @@ public class Door : MonoBehaviour {
 
     private void OpenDoor() {
         isOpen = true;
+        animator.SetBool("IsOpen", isOpen);
         Pathfinding.Instance.SetIsWalkableGridPosition(gridPosition, isOpen);
     }
 
     private void CloseDoor() {
         isOpen = false;
+        animator.SetBool("IsOpen", isOpen);
         Pathfinding.Instance.SetIsWalkableGridPosition(gridPosition, isOpen);
     }
 }
