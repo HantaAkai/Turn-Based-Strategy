@@ -17,7 +17,20 @@ public class UnitAnimator : MonoBehaviour {
 
         if (TryGetComponent<ShootAction>(out ShootAction shootAction)) {
             shootAction.OnShoot += ShootAction_OnShoot;
+        } 
+        
+        if (TryGetComponent<SwordAction>(out SwordAction swordAction)) {
+            swordAction.OnSwordActionStarted += SwordAction_OnSwordActionStarted;
+            swordAction.OnSwordActionCompleted += SwordAction_OnSwordActionCompleted;
         }
+    }
+
+    private void SwordAction_OnSwordActionCompleted(object sender, System.EventArgs e) {
+        
+    }
+
+    private void SwordAction_OnSwordActionStarted(object sender, System.EventArgs e) {
+        animator.SetTrigger("SwordSlash");
     }
 
     private void ShootAction_OnShoot(object sender, ShootAction.OnShootEventArgs e) {
@@ -37,5 +50,37 @@ public class UnitAnimator : MonoBehaviour {
 
     private void MoveAction_OnStartMoving(object sender, System.EventArgs e) {
         animator.SetBool("IsWalking", true);
+    }
+
+    private void OnDisable() {
+        if (TryGetComponent<MoveAction>(out MoveAction moveAction)) {
+            moveAction.OnStartMoving -= MoveAction_OnStartMoving;
+            moveAction.OnStopMoving -= MoveAction_OnStopMoving;
+        }
+
+        if (TryGetComponent<ShootAction>(out ShootAction shootAction)) {
+            shootAction.OnShoot -= ShootAction_OnShoot;
+        }
+
+        if (TryGetComponent<SwordAction>(out SwordAction swordAction)) {
+            swordAction.OnSwordActionStarted -= SwordAction_OnSwordActionStarted;
+            swordAction.OnSwordActionCompleted -= SwordAction_OnSwordActionCompleted;
+        }
+    }
+
+    private void OnDestroy() {
+        if (TryGetComponent<MoveAction>(out MoveAction moveAction)) {
+            moveAction.OnStartMoving -= MoveAction_OnStartMoving;
+            moveAction.OnStopMoving -= MoveAction_OnStopMoving;
+        }
+
+        if (TryGetComponent<ShootAction>(out ShootAction shootAction)) {
+            shootAction.OnShoot -= ShootAction_OnShoot;
+        }
+
+        if (TryGetComponent<SwordAction>(out SwordAction swordAction)) {
+            swordAction.OnSwordActionStarted -= SwordAction_OnSwordActionStarted;
+            swordAction.OnSwordActionCompleted -= SwordAction_OnSwordActionCompleted;
+        }
     }
 }
